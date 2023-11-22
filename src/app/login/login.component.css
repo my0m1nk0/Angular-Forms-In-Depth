@@ -8,6 +8,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
+  /* gap: 30px; */
 }
 
 .test-input {
@@ -15,4 +16,8 @@
   margin-bottom: 10px;
 }
 
+/* input.ng-invalid.ng-touched{
+  border: 3px solid red;
+
+} */
 

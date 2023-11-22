@@ -1,27 +1,62 @@
 <mat-card class="login-page">
   <mat-card-title>Login (Reactive)</mat-card-title>
   <mat-card-content>
-
-    <form class="login-form data-form">
-
+    <form class="login-form data-form" [formGroup]="formone">
       <mat-form-field>
-
-        <input matInput type="email" name="email"
-               placeholder="Email">
-
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          placeholder="Email"
+          formControlName="email"
+        />
+        <mat-error *ngIf="formone.controls['email'].errors?.required">
+          The email is Mandatory
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-
-        <input matInput type="password" placeholder="Password">
-
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="formone.controls['password'].errors?.required">
+          The password is mandatory</mat-error
+        >
       </mat-form-field>
-
-      <button mat-raised-button color="primary">
+      <ng-container
+        *ngIf="
+          password.errors
+            | onlyOneError
+              : ['required', 'minlength', 'passwordStrength'] as error
+        "
+      >
+        <div class="field-message" *ngIf="error.passwordStrength">
+          Your password must have lower and upper case letters, numeric
+          character
+        </div>
+        <div class="field-message" *ngIf="error.minlength">
+          Your password must have minimum{{
+            password.errors?.minlength.requiredLength
+          }}
+          characters, but it only has
+          {{ password.errors?.minlength.actualLength }} char
+        </div>
+      </ng-container>
+      <button mat-raised-button color="primary" (click)="login()" [disabled]="formone.invalid">
         Login
       </button>
-
+      <button (click)="rest()">Rest</button>
     </form>
 
+    <!-- <div class="form-val">
+      <pre>{{ formone.value | json }}</pre>
+      <pre>{{ formone.status | json }}</pre>
+      <pre>{{ formone.valid | json }}</pre>
+    </div> -->
   </mat-card-content>
 </mat-card>
